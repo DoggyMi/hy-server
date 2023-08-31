@@ -1,5 +1,5 @@
 export default (): any => ({
-  env: '13',
+  env: process.env.APP_ENV,
   port: process.env.APP_PORT,
   database: {
     url: process.env.DB_URL,

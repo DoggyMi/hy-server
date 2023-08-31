@@ -11,6 +11,7 @@ export class UserService {
   ) {}
   create(createUserDto: CreateUserDto) {
     console.log(this.systemService.getEnv());
+
     return 'This action adds a new user';
   }
 

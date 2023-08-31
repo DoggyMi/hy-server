@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { SystemService } from 'src/shared/system.service';
@@ -15,6 +15,8 @@ export class UserService {
   }
 
   findAll() {
+    // throw '异常'; // 异常
+    throw new HttpException('自定义异常', HttpStatus.CONFLICT);
     return `This action returns all user`;
   }
 

@@ -14,10 +14,10 @@ export class UserService {
     private readonly userRepository: MongoRepository<User>,
   ) {}
   create(createUserDto: CreateUserDto) {
-    console.log(this.systemService.getEnv());
+    // console.log(this.systemService.getEnv());
     return this.userRepository.save({
-      name: 'gaga',
-      email: '1@1.com',
+      name: 'gaga2',
+      email: '1@2.com',
     });
   }
 

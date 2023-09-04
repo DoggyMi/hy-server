@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { SystemService } from 'src/shared/system.service';
 import { MongoRepository } from 'typeorm';
 import { User } from './entities/user.mongo.entity';
+import { AppLogger } from 'src/shared/logger/logger.service';
 
 @Injectable()
 export class UserService {
@@ -12,9 +13,13 @@ export class UserService {
     private readonly systemService: SystemService,
     @Inject('USER_REPOSITORY')
     private readonly userRepository: MongoRepository<User>,
-  ) {}
+    private readonly logger: AppLogger,
+  ) {
+    this.logger.setContext(UserService.name);
+  }
   create(createUserDto: CreateUserDto) {
     // console.log(this.systemService.getEnv());
+
     return this.userRepository.save({
       name: 'gaga2',
       email: '1@2.com',
@@ -24,6 +29,8 @@ export class UserService {
   findAll() {
     // throw '异常'; // 异常
     // throw new HttpException('自定义异常', HttpStatus.CONFLICT);
+
+    this.logger.warn(null, 'user Create ...', { a: 123 });
     return this.userRepository.findAndCount({});
   }
 

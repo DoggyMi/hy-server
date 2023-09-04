@@ -35,8 +35,8 @@ export class UserController {
 
   @Get()
   findAll() {
-    console.log(this.configService);
-    console.log(this.configService.get<string>('env'));
+    // console.log(this.configService);
+    // console.log(this.configService.get<string>('env'));
     return this.userService.findAll();
   }
 

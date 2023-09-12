@@ -9,7 +9,7 @@ export class CreateUserDto {
   @Matches(/^1\d{10}$/g, { message: '请输入手机号' })
   readonly phoneNumber: string;
 
-  @ApiProperty({ example: '然叔' }) name: string;
+  @ApiProperty({ example: '浩宇' }) name: string;
 
   @ApiProperty({ example: '123456' })
   @IsNotEmpty()

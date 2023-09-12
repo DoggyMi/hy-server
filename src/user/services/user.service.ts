@@ -1,9 +1,9 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateUserDto } from '../dtos/create-user.dto';
+import { UpdateUserDto } from '../dtos/update-user.dto';
 import { SystemService } from 'src/shared/system.service';
 import { MongoRepository } from 'typeorm';
-import { User } from './entities/user.mongo.entity';
+import { User } from '../entities/user.mongo.entity';
 import { AppLogger } from 'src/shared/logger/logger.service';
 
 @Injectable()
@@ -26,23 +26,27 @@ export class UserService {
     });
   }
 
-  findAll() {
+  async findAll() {
     // throw '异常'; // 异常
     // throw new HttpException('自定义异常', HttpStatus.CONFLICT);
 
     this.logger.warn(null, 'user Create ...', { a: 123 });
-    return this.userRepository.findAndCount({});
+    const [data, count] = await this.userRepository.findAndCount({});
+    return {
+      data,
+      count,
+    };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(_id: string) {
+    return await this.userRepository.findOneBy(_id);
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: string, user: CreateUserDto) {
+    return await this.userRepository.update(id, user);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: string): Promise<any> {
+    return await this.userRepository.delete(id);
   }
 }

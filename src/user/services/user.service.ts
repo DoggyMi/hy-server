@@ -5,6 +5,7 @@ import { SystemService } from 'src/shared/system.service';
 import { MongoRepository } from 'typeorm';
 import { User } from '../entities/user.mongo.entity';
 import { AppLogger } from 'src/shared/logger/logger.service';
+import { PaginationParams2Dto } from 'src/shared/dtos/pagination-params.dto';
 
 @Injectable()
 export class UserService {
@@ -26,12 +27,19 @@ export class UserService {
     });
   }
 
-  async findAll() {
+  async findAll({
+    pageSize,
+    page,
+  }: PaginationParams2Dto): Promise<{ data: User[]; count: number }> {
     // throw '异常'; // 异常
     // throw new HttpException('自定义异常', HttpStatus.CONFLICT);
+    const [data, count] = await this.userRepository.findAndCount({
+      order: { name: 'DESC' }, // createdAt 分页需要一个排序
+      skip: (page - 1) * pageSize,
+      take: pageSize * 1,
+      cache: true,
+    });
 
-    this.logger.warn(null, 'user Create ...', { a: 123 });
-    const [data, count] = await this.userRepository.findAndCount({});
     return {
       data,
       count,
